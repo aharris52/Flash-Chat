@@ -10,5 +10,6 @@ iOS Developer course.
 * Firebase -user registration/auth/login
 * Firestore -noSQL Databases
 * Embedding View Contollers in Navigation Controllers
+* Navigation Stack
 * App Lifecycle -viewWillAppear() / viewWillDisappear()
 * Animations
