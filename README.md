@@ -6,9 +6,9 @@ iOS Developer course.
 
 ## Topics Covered
 * UITableView -data sources and delegates
-Swift Package Manager / Cocoapods
-Firebase -user registration/auth/login
-Firestore -noSQL Databases
-Embedding View Contollers in Navigation Controllers
-App Lifecycle -viewWillAppear() / viewWillDisappear()
-Animations
+* Swift Package Manager / Cocoapods
+* Firebase -user registration/auth/login
+* Firestore -noSQL Databases
+* Embedding View Contollers in Navigation Controllers
+* App Lifecycle -viewWillAppear() / viewWillDisappear()
+* Animations
