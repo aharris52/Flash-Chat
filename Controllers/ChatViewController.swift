@@ -25,6 +25,9 @@ class ChatViewController: UIViewController {
         tableView.dataSource = self
         title = Constants.title
         navigationItem.hidesBackButton = true
+        
+        // Register the custom chat bubble .xib
+        tableView.register(UINib(nibName: Constants.cellNibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
@@ -41,13 +44,15 @@ class ChatViewController: UIViewController {
 }
 
 extension ChatViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
-        cell.textLabel?.text = messages[indexPath.row].body 
+            as! MessageCell
+        cell.label.text = messages[indexPath.row].body
         return cell
     }
     
