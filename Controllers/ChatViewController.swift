@@ -10,9 +10,11 @@ import UIKit
 import Firebase
 
 class ChatViewController: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var messageTextfield: UITextField!
+    
+    let db = Firestore.firestore()
     
     var messages: [Message] = [
         Message(sender: "1@2.com", body: "What's your favorite dinosaur?"),
@@ -31,16 +33,28 @@ class ChatViewController: UIViewController {
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
+        if let messageBody = messageTextfield.text, let messageSender = Auth.auth().currentUser?.email {
+            db.collection(Constants.FStore.collectionName).addDocument(data: [
+                Constants.FStore.bodyField: messageBody,
+                Constants.FStore.senderField: messageSender
+            ]) { (error) in
+                if let e = error {
+                    print("There was an issue saving data to to Firestore: \(e)")
+                } else {
+                    print("Successfully saved data...")
+                }
+            }
+        }
     }
     
     @IBAction func logOutPressed(_ sender: UIBarButtonItem) {
         let firebaseAuth = Auth.auth()
-    do {
-      try firebaseAuth.signOut()
-        navigationController?.popToRootViewController(animated: true)
-    } catch let signOutError as NSError {
-      print("Error signing out: %@", signOutError)
-    }}
+        do {
+            try firebaseAuth.signOut()
+            navigationController?.popToRootViewController(animated: true)
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }}
 }
 
 extension ChatViewController: UITableViewDataSource {
@@ -51,7 +65,7 @@ extension ChatViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
-            as! MessageCell
+        as! MessageCell
         cell.label.text = messages[indexPath.row].body
         return cell
     }
