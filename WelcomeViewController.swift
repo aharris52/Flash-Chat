@@ -18,13 +18,13 @@ class WelcomeViewController: UIViewController {
         titleLabel.text = ""
         // flag
         var charIndex = 0.0
-        let titleText = "⚡️FlashChat"
+        let titleText = Constants.title
         for letter in titleText{
             // print each method call
             // print("-")
             // print(charIndex)
             // print(letter)
-            Timer.scheduledTimer(withTimeInterval: 0.25 * charIndex, repeats: false) { (timer) in
+            Timer.scheduledTimer(withTimeInterval: 0.15 * charIndex, repeats: false) { (timer) in
                 self.titleLabel.text?.append(letter)
             }
             charIndex += 1
