@@ -43,7 +43,17 @@ class ChatViewController: UIViewController {
             } else {
                 if let snapshotDocuments = querySnapshot?.documents {
                     for doc in snapshotDocuments {
-                        print(doc.data())
+                        //print(doc.data())
+                        let data = doc.data()
+                        if let messageSender = data[Constants.FStore.senderField] as? String,
+                           let messageBody = data[Constants.FStore.bodyField] as? String {
+                            let newMessage = Message(sender: messageSender, body: messageBody)
+                            self.messages.append(newMessage)
+                            // Ensure the tabel view loads on the main thread
+                            DispatchQueue.main.async {
+                                self.tableView.reloadData()
+                            }
+                        }
                     }
                 }
             }
