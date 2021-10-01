@@ -30,6 +30,24 @@ class ChatViewController: UIViewController {
         
         // Register the custom chat bubble .xib
         tableView.register(UINib(nibName: Constants.cellNibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
+        
+        loadMessages()
+    }
+    
+    func loadMessages() {
+        messages = []
+        
+        db.collection(Constants.FStore.collectionName).getDocuments() { (querySnapshot, error) in
+            if let e = error {
+                print("Error retrieving documents: \(e)")
+            } else {
+                if let snapshotDocuments = querySnapshot?.documents {
+                    for doc in snapshotDocuments {
+                        print(doc.data())
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func sendPressed(_ sender: UIButton) {
